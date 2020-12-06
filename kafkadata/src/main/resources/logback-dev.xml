@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="15 seconds">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d %-5p [%c] %m%n</pattern>
+        </encoder>
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+	<appender name="ALTDATES"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>%d{ISO8601},%m%n</pattern>
+		</encoder>
+		<file>${LOG_PATH}/alternatedates.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/alternatedates.log.%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>150MB</totalSizeCap>
+		</rollingPolicy>
+	</appender>
+
+    <appender name="OPERATIONINFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{ISO8601},%m%n</pattern>
+        </encoder>
+        <file>${LOG_PATH}/operationInfo.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/operationInfo.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>150MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ERRORINFO"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{ISO8601},%m%n</pattern>
+        </encoder>
+        <file>${LOG_PATH}/errorInfo.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/errorInfo.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>150MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="MISSING-ERROR-CODE-MAPPING"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{ISO8601} %-5p [%c] %m%n</pattern>
+        </encoder>
+        <file>${LOG_PATH}/missing-error-code.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/missing-error-code.log.%d{yyyy-MM-dd}
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>150MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="ERRORINFO" level="ERROR">
+        <appender-ref ref="ERRORINFO"/>
+    </logger>
+    <logger name="OPERATIONINFO" level="DEBUG">
+        <appender-ref ref="OPERATIONINFO"/>
+    </logger>
+    <logger name="ALTDATES" level="INFO">
+        <appender-ref ref="ALTDATES"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+    
+	<logger name="com.alternate.microservice.web" level="DEBUG" />
+	<logger name="com.alternate.microservice.service" level="DEBUG" />
+	<logger name="com.alternate.microservice.dataaccess.ehcache.dao" level="DEBUG" />
+	<logger name="com.alternate.microservice.config" level="DEBUG" />
+	<logger name="com.alternate.microservice.businessobjects" level="DEBUG" />
+	
+</configuration>
